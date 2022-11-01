@@ -1,7 +1,10 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 const UserProfile = () => {
+
+  
+  
   return (
     <div class="user-account">
       <div class="row">
@@ -15,7 +18,7 @@ const UserProfile = () => {
                 <img src="images/pic/avatar.jpg" />
               </div>
               <div class="detail">
-                <span> John Black </span>
+                <span> </span>
               </div>
             </div>
 
@@ -26,7 +29,7 @@ const UserProfile = () => {
               <div class="inner">
                 <ul>
                   <li>
-                    <Link to="/logout"> Logout </Link>
+                    <Link to="#"> Logout </Link>
                   </li>
                 </ul>
               </div>
@@ -44,15 +47,15 @@ const UserProfile = () => {
                 <ul>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-account"></i> Fullname: John Black 
+                    <i class="zmdi zmdi-account"></i> Fullname: 
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-assignment-account"></i> User name: johnblack
+                    <i class="zmdi zmdi-assignment-account"></i> User name: 
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-email"></i> Email: johnblack@gmail.com
+                    <i class="zmdi zmdi-email"></i> Email:
                   </li>
                 </ul>
               </div>

@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <>
       <header>
-        <a href="" className="logo">
+        <a href="" className="image-fluid">
           <img src="images/header-image.png" />
         </a>
         <h1> Self learning by Bestlearn </h1>

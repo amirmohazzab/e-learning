@@ -1,9 +1,9 @@
 import React from "react";
-import { NavLink, Link, useLocation} from "react-router-dom";
+import { NavLink} from "react-router-dom";
 
 const TopNav = () => {
 
-  const location = useLocation();
+  
 
   return (
     <nav>
@@ -11,7 +11,7 @@ const TopNav = () => {
         <div className="col-sm-6 col-xs-12">
           <ul>
             <li>
-              <NavLink to="/" exact style={{color: location.pathname === "/" ? "lime" : null}}    
+              <NavLink to="/"    
               > Main page 
               </NavLink>   
             </li>
@@ -19,19 +19,24 @@ const TopNav = () => {
         </div>
         <div className="col-sm-6 col-xs-12">
           <div className="clientarea">
-            <div className="loggein hidden">
+              
+                <div className="loggein hidden">
               <i className="zmdi zmdi-account"></i>
-              <Link to="/user-profile"> Welcome, John Black </Link>
+              <NavLink to="/user-profile"> </NavLink>
+              /
+              <NavLink to="#"> logout </NavLink>
             </div>
-            <div className="signin">
-              <i className="zmdi zmdi-account"></i>
-              <NavLink to="/login" exact style={ ({isActive}) => ({ color: isActive ? "lime" : null}) }
-              > Login 
-              </NavLink> 
-            / <NavLink to="/register" exact style={({isActive}) => ({ color: isActive ? "lime" : null}) }
-              > Register 
-              </NavLink>
-            </div>
+             
+                <div className="signin">
+                <i className="zmdi zmdi-account"></i>
+                <NavLink to="/login" 
+                > Login 
+                </NavLink> 
+              / <NavLink to="/register" 
+                > Register 
+                </NavLink>
+              </div>
+             
           </div>
         </div>
       </div>
