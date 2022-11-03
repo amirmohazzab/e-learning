@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { paginate } from "./../../utils/paginate";
+import Pagination from "./../common/Pagination";
+import Course from "./Course";
 
 const Archive = () => {
+  const [perPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const courses = useSelector((state) => state.courses);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const archiveCourses = paginate(courses, currentPage, perPage);
 
   return (
     <section className="term-categories">
       <div className="top-bar">
         <header>
-         <h1> <span> Programming </span> Courses </h1> 
-         <span> course numbers  </span>
+          <h1>
+            {" "}
+            <span> Programming </span> Courses{" "}
+          </h1>
+          <span> course numbers {courses.length} </span>
         </header>
 
-        <div className="row">   
+        <div className="row">
           <div className="col-md-4 col-sm-12 col-xs-12 pull-right">
             <form action="" method="">
               <div className="input">
@@ -69,13 +84,11 @@ const Archive = () => {
             <div className="inner">
               <ul>
                 <li>
-                  <input type="checkbox" name="" id="cat-1"/>
-                  {" "}
+                  <input type="checkbox" name="" id="cat-1" />{" "}
                   <label for="cat-1"> Web programming </label>
                 </li>
                 <li>
-                  <input type="checkbox" name="" id="cat-2" />
-                  {" "}
+                  <input type="checkbox" name="" id="cat-2" />{" "}
                   <label for="cat-2"> Mobile programming </label>
                 </li>
               </ul>
@@ -86,7 +99,14 @@ const Archive = () => {
         <div className="col-lg-9 col-md-8 col-sm-12 col-xs-12">
           <section className="terms-items">
             <div className="row">
+              <Course courses={archiveCourses} />
             </div>
+            <Pagination
+              totalCourse={courses.length}
+              currentPage={currentPage}
+              perPage={perPage}
+              onPageChange={handlePageChange}
+            />
           </section>
         </div>
       </div>

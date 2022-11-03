@@ -1,69 +1,36 @@
-import React, { useState, useRef } from "react";
+import React, { useContext } from "react";
 import Helmet from "react-helmet";
-import SimpleReactValidator from 'simple-react-validator';
-import { toast } from 'react-toastify';
-import { registerUser } from './../../services/userService';
+import { context } from './../context/context';
 
 const Register = () => {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [,forceUpdate] = useState();
 
-  const validator = useRef(new SimpleReactValidator({
-    element: message => <div style={{color: "red"}}>{message}</div>
-  }));
+  const registerContext = useContext(context);
 
-  const reset = () => {
-    setFullname("");
-    setEmail("");
-    setPassword("");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const user = {
-      fullname,
-      email,
-      password,
-    };
-
-    try {
-      if(validator.current.allValid()) {
-        const {status } = await registerUser(user);
-        if (status === 201){
-            toast.success("user was successfully created", {
-              position: "top-right",
-              closeOnClick: true
-            })
-          reset();
-        }
-      } else {
-        validator.current.showMessages();
-        forceUpdate(1);
-      }
-      
-    } catch(ex){
-      toast.error("problem was occured", {
-        position: "top-right",
-        closeOnClick: true
-      })
-      console.log(ex);
-    }  
-  };
-
+    const {
+        fullname,
+        setFullname,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        handleRegister,
+        validator
+    } = registerContext;
+  
   return (
     <main className="client-page">
       <div className="container-content">
+
         <header>
           <h2> Register </h2>
         </header>
+
         <Helmet>
           <title> Bestlearn | Register </title>
         </Helmet>
 
         <div className="form-layer">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={e => handleRegister(e)}>
             <div className="input-group">
               <span className="input-group-addon" id="username">
                 <i className="zmdi zmdi-account"></i>
@@ -83,6 +50,7 @@ const Register = () => {
               {validator.current.message("fullname", fullname, "required|min:5")}
             </div>
 
+
             <div className="input-group">
               <span className="input-group-addon" id="email-address">
                 <i className="zmdi zmdi-email"></i>
@@ -101,6 +69,7 @@ const Register = () => {
               />
                {validator.current.message("email", email, "required|email")}
             </div>
+
 
             <div className="input-group">
               <span className="input-group-addon" id="password">

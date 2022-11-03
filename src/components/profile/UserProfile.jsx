@@ -1,10 +1,15 @@
 import React from "react";
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, Navigate} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isEmpty } from "lodash";
 
 const UserProfile = () => {
 
-  
-  
+  const user = useSelector(state => state.user);
+
+  if (isEmpty(user)) return <Navigate to="/" />; 
+
+
   return (
     <div class="user-account">
       <div class="row">
@@ -18,7 +23,7 @@ const UserProfile = () => {
                 <img src="images/pic/avatar.jpg" />
               </div>
               <div class="detail">
-                <span> </span>
+                <span> {user.fullname} </span>
               </div>
             </div>
 
@@ -29,7 +34,7 @@ const UserProfile = () => {
               <div class="inner">
                 <ul>
                   <li>
-                    <Link to="#"> Logout </Link>
+                    <Link to="/logout"> Logout </Link>
                   </li>
                 </ul>
               </div>
@@ -47,15 +52,15 @@ const UserProfile = () => {
                 <ul>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-account"></i> Fullname: 
+                    <i class="zmdi zmdi-account"></i> Fullname: {user.fullname}
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-assignment-account"></i> User name: 
+                    <i class="zmdi zmdi-assignment-account"></i> User name: {user.email.split('@')[0]}
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-email"></i> Email:
+                    <i class="zmdi zmdi-email"></i> Email: {user.email}
                   </li>
                 </ul>
               </div>

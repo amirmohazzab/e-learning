@@ -5,6 +5,7 @@ import MainNav from './../navs/MainNav';
 import Footer from './../common/Footer';
 import { useLocation } from "react-router-dom";
 import Helmet from 'react-helmet';
+import LoadingBar from "react-redux-loading-bar";
 
 
 const MainLayout = ({ children }) => {
@@ -15,7 +16,9 @@ const MainLayout = ({ children }) => {
       <Helmet>
         <title> Bestlearn | Bestlearn Selflearner </title>
       </Helmet>
+     
       <div className="landing-layer">
+      <LoadingBar style={{backgroundColor: "lime", height: "5px"}}/>
         <div className="container">
           <TopNav />
           {

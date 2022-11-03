@@ -1,57 +1,21 @@
-import React, {useState, useRef} from "react";
-import {useNavigate} from 'react-router-dom'
-import SimpleReactValidator from 'simple-react-validator';
+import React, {useContext} from "react";
 import Helmet from 'react-helmet';
-import { toast } from 'react-toastify';
-import { loginUser } from "../../services/userService";
+import { context } from './../context/context';
 
 
 const Login = () => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [,forceUpdate] = useState();
+  const loginContext = useContext(context);
 
-  const validator = useRef(new SimpleReactValidator({
-    element: message => <div style={{color: "red"}}>{message}</div>
-  }));
+    const {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        handleLogin,
+        validator
+    } = loginContext;
 
-  const navigate = useNavigate();
-
-  const reset = () => {
-    setEmail("");
-    setPassword("");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const user = {email, password};
-
-    try {
-      if(validator.current.allValid()) {
-        const {data, status} = await loginUser(user);
-      if (status === 200){
-          toast.success("user was successfully loggedin", {
-            position: "top-right",
-            closeOnClick: true
-          })
-          localStorage.setItem("token", data.token);
-          navigate("/", {replace: true});
-          reset();
-      }
-    } else {
-      validator.current.showMessages();
-        forceUpdate(1);
-    }
-      
-    } catch(ex){
-      toast.error("problem was occured", {
-        position: "top-right",
-        closeOnClick: true
-      })
-      console.log(ex);
-    }  
-  }
 
   return (
     <main className="client-page">
@@ -65,7 +29,7 @@ const Login = () => {
 
 
         <div className="form-layer">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={e => handleLogin(e)}>
             <div className="input-group">
               <span className="input-group-addon" id="email-address">
                 <i className="zmdi zmdi-email"></i>
