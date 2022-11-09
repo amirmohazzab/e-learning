@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch } from "react-redux";
 import { context } from "./context";
@@ -16,6 +16,15 @@ const UserContext = ({ children }) => {
 
     const [, forceUpdate] = useState();
 
+    useEffect(() => {
+        return () => {
+            setFullname();
+            setEmail();
+            setPassword();
+            forceUpdate();
+        };
+    }, []);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -25,11 +34,6 @@ const UserContext = ({ children }) => {
         })
     );
 
-    const resetStates = () => {
-        setFullname("");
-        setEmail("");
-        setPassword("");
-    };
 
     const handleLogin = async event => {
         event.preventDefault();
@@ -46,7 +50,6 @@ const UserContext = ({ children }) => {
                     dispatch(addUser(myDecodedToken.user));
                     dispatch(hideLoading());
                     navigate("/", {replace: true});
-                    resetStates();
                 }
             } else {
                 validator.current.showMessages();

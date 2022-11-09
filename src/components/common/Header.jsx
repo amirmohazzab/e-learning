@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+
+
   return (
     <>
       <header>
@@ -10,14 +13,6 @@ const Header = () => {
         <h1> Self learning by Bestlearn </h1>
         <h2> Experience and Enter Job Market </h2>
       </header>
-      <div className="search-form">
-        <form>
-          <button>
-              <i className="zmdi zmdi-search"></i>
-          </button>
-          <input type="text" name="" placeholder="what do you want to learn" />
-        </form>
-      </div>
     </>
   );
 };

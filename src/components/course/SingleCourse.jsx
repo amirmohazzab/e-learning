@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Navigate } from 'react-router-dom';
 import { getSingleCourse } from './../../actions/course';
 import { courseIdValidator } from './../../utils/IdValidator';
-//import ShowImage from '../common/ShowImage';
 import config from '../../services/config.json'
 
 const SingleCourse = () => {
@@ -33,7 +32,6 @@ const SingleCourse = () => {
         <div class="col-md-8 col-sm-12 col-xs-12 pull-right">
             <section class="term-description">
                 <img src={`${config.localapi}/${course.imageUrl}`}/>
-                {/* <ShowImage image={course.imageUrl} /> */}
                 <p>{course.info}</p>
             </section>
         </div>

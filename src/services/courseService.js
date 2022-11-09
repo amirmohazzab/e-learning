@@ -8,3 +8,15 @@ export const getCourses = () => {
 export const getCourse = courseId => {
     return http.get(`${config.localapi}/api/course/${courseId}`);
 };
+
+export const newCourse = course => {
+    return http.post(`${config.localapi}/api/course`, course);
+};
+
+export const updateCourse = (courseId, course) => {
+    return http.put(`${config.localapi}/api/course/${courseId}`, course);
+};
+
+export const deleteCourse = courseId => {
+    return http.delete(`${config.localapi}/api/course/${courseId}`);
+};

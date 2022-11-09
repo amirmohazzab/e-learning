@@ -28,8 +28,12 @@ const TopNav = () => {
 
                 <div className="loggein">
                   <i className="zmdi zmdi-account"></i>
-                  <NavLink to="/user-profile"> {user.fullname} </NavLink>
+                  <NavLink to="/user-profile" style={({isActive}) => ({ color: isActive ? "lime" : null})}> {user.fullname} </NavLink>
                   {"  "}
+                  /
+                  {"  "}
+                  {user.isAdmin ? (<NavLink to="/dashboard"> Admin Panel </NavLink>) : null}
+                    {"  "}
                     /
                     {"  "}
                   <NavLink to="/logout"> logout </NavLink>

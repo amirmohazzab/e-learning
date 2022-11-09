@@ -1,20 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { paginate } from "./../../utils/paginate";
 import Pagination from "./../common/Pagination";
 import Course from "./Course";
+import { orderBy } from "lodash";
 
 const Archive = () => {
-  const [perPage] = useState(12);
+  const [perPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [courseList, setCourseList] = useState([]);
+  const [sort, setSort] = useState("");
+  
 
   const courses = useSelector((state) => state.courses);
+  useEffect(() => setCourseList(courses), [courses]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const archiveCourses = paginate(courses, currentPage, perPage);
+
+  const sortedPrice = (event)=> {
+
+    setSort(event.target.value);
+   
+    if(sort === "asc"){
+      setCourseList([]);
+      setCourseList(orderBy(courseList, "price", "asc"));
+      return;
+    }
+    if(sort === 'desc'){
+      setCourseList([]);
+      setCourseList(orderBy(courseList, "price", "desc"));
+      return;
+    }
+  }
+
+
+  const filterItems = model => {
+
+    if (model === "All"){
+      setCourseList([]);
+      setCourseList(courses);
+      return
+    }
+    if (model === "Buy") {
+      setCourseList([]);
+      const newItems = courses.filter((item) => item.price > Number.parseInt(0));
+      setCourseList(newItems);
+      return;
+    }
+    if (model === "Free") {
+      setCourseList([]);
+      const newItems = courses.filter((item) => item.price === Number.parseInt(0));
+      setCourseList(newItems);
+      return;
+    }
+  }
+
+
+  
+
+
+  const filteredShowCourses = courseList.filter((course) => course.title.toLowerCase().includes(search.toLowerCase()));
+  
+  const archiveCourses = paginate(filteredShowCourses, currentPage, perPage);
+
+  console.log(courseList, "courseList");
 
   return (
     <section className="term-categories">
@@ -22,7 +75,7 @@ const Archive = () => {
         <header>
           <h1>
             {" "}
-            <span> Programming </span> Courses{" "}
+            <span> Programming </span> Courses {" "}
           </h1>
           <span> course numbers {courses.length} </span>
         </header>
@@ -31,7 +84,15 @@ const Archive = () => {
           <div className="col-md-4 col-sm-12 col-xs-12 pull-right">
             <form action="" method="">
               <div className="input">
-                <input type="text" name="" placeholder=" Subject ... " />
+                <input 
+                  type="text"
+                  name="search"
+                  className="form-control"
+                  placeholder=" Subject ... " 
+                  aria-describedby="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <button>
                   <i className="zmdi zmdi-search"></i>
                 </button>
@@ -40,76 +101,62 @@ const Archive = () => {
           </div>
           <div className="col-md-4 col-sm-6 col-xs-12">
             <div className="switch-field available">
+
               <input
                 id="available-filter-1"
                 name="available"
-                value="all"
-                checked=""
+                value="Free"
                 type="radio"
+                onClick={(e)=> filterItems(e.target.value)}
               />
               <label for="available-filter-1"> Free </label>
+
               <input
                 id="available-filter-2"
                 name="available"
-                value="off"
+                value="Buy"
                 type="radio"
+                onClick={(e)=> filterItems(e.target.value)}
               />
               <label for="available-filter-2"> Buy </label>
+
               <input
                 id="available-filter-3"
                 name="available"
-                value="normal"
+                value="All"
                 type="radio"
+                onClick={(e)=> filterItems(e.target.value)}
               />
               <label for="available-filter-3"> All </label>
+
             </div>
           </div>
           <div className="col-md-4 col-sm-6 col-xs-12 pull-left">
             <div className="select-ddl">
-              <select>
-                <option> Sort </option>
-                <option> price </option>
+              <select value={sort} onChange={sortedPrice}>
+                <option value="desc"> price(asc) </option>
+                <option value="asc"> price(desc) </option>
               </select>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="row">
-        <aside className="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-          <section className="aside-section filter-by-category">
-            <header>
-              <h3> Subject </h3>
-            </header>
-            <div className="inner">
-              <ul>
-                <li>
-                  <input type="checkbox" name="" id="cat-1" />{" "}
-                  <label for="cat-1"> Web programming </label>
-                </li>
-                <li>
-                  <input type="checkbox" name="" id="cat-2" />{" "}
-                  <label for="cat-2"> Mobile programming </label>
-                </li>
-              </ul>
-            </div>
-          </section>
-        </aside>
-
-        <div className="col-lg-9 col-md-8 col-sm-12 col-xs-12">
-          <section className="terms-items">
-            <div className="row">
-              <Course courses={archiveCourses} />
-            </div>
-            <Pagination
-              totalCourse={courses.length}
-              currentPage={currentPage}
-              perPage={perPage}
-              onPageChange={handlePageChange}
-            />
-          </section>
+        <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <section className="terms-items pl-6">
+              <div className="row">
+                <Course courses={archiveCourses} />
+              </div>
+              <Pagination
+                totalCourse={search ? filteredShowCourses.length : courseList.length}
+                currentPage={currentPage}
+                perPage={perPage}
+                onPageChange={handlePageChange}
+              />
+            </section>
+          </div>
         </div>
-      </div>
     </section>
   );
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-//import ShowImage from '../common/ShowImage';
 import config from '../../services/config.json';
 
 
@@ -31,7 +30,6 @@ const Course = ({courses}) => {
                                 <img
                                     src={`${config.localapi}/${course.imageUrl}`}
                                 />
-                                {/* <ShowImage image={course.imageUrl} /> */}
                             </Link>
                             <h2>
                                 <Link to={`/course/${course._id}`}>
@@ -39,9 +37,7 @@ const Course = ({courses}) => {
                                 </Link>
                             </h2>
                             <span>
-                                 {
-                                    course.price > 0 ? course.price : <span> Free </span>  
-                                 }
+                                 {course.price}
                             </span>
                         </article>
                     </div>
