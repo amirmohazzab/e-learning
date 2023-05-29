@@ -16,4 +16,5 @@ export const dashContext = createContext({
     sortCoursesAsc: () => {},
     sortCoursesDes: () => {},
     validator: null,
+    categories: []
 });

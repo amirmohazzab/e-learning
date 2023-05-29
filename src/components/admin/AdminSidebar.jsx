@@ -3,7 +3,7 @@ import { Link, useLocation} from "react-router-dom";
 
 const AdminSidebar = () => {
 
-    const location = useLocation();
+    const location = useLocation();     
     return (
         <div>
             <ul className="nav navbar-nav side-nav" style={{ height: "100vh" }}>

@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { useDispatch } from "react-redux";
 import { handleCourseUpdate } from "../../../actions/courses";
+import { dashContext } from './../../context/dashContext';
 
 const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
     const [courseId, setCourseId] = useState();
     const [title, setTitle] = useState();
     const [price, setPrice] = useState();
     const [imageUrl, setImageUrl] = useState();
+    const [category,setCategory] = useState();
     const [info, setInfo] = useState();
 
 
     const dispatch = useDispatch();
+
+    const context = useContext(dashContext);
+    const {categories} = context; 
 
     useEffect(() => {
         setCourseId(course._id);
         setTitle(course.title);
         setPrice(course.price);
         setImageUrl(course.imageUrl);
+        setCategory(course.category);
         setInfo(course.info);
 
         return () => {
@@ -25,6 +31,7 @@ const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
             setTitle();
             setPrice();
             setImageUrl();
+            setCategory();
             setInfo();
         };
     }, [course]);
@@ -37,8 +44,9 @@ const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
         if (event.target.imageUrl.files[0])
             data.append("imageUrl", event.target.imageUrl.files[0]);
         else data.append("imageUrl", imageUrl);
+        data.append("category", category);
         data.append("info", info);
-        console.log(data);
+
         dispatch(handleCourseUpdate(courseId, data));
         closeDialog();
     };
@@ -88,6 +96,21 @@ const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
                             className="form-control mb-2"
                             aria-describedby="imageUrl"
                         />
+
+                        <div className="mb-2">
+                          <select value={category} className="form-control mb-2" 
+                                        onChange={(e) => setCategory(e.target.value)}
+                          >
+                            <option value=""> Select Category </option>
+                            {categories.map(category => (
+                                <option key={category.id} value={category.name}>
+                                  {category.name}
+                                </option>
+                              ))
+                            }
+                          </select>
+                        </div>
+
                         <textarea
                             name="info"
                             placeholder="info"

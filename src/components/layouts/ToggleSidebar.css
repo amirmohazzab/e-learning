@@ -1,0 +1,108 @@
+
+.sidebar-toggle {
+  visibility: hidden;
+}
+
+
+@media screen and (max-width : 768px){
+
+  .sidebar{
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+    padding: 50px 0;
+    background: black;
+    top: 0;
+    left: 0;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+  
+  .sidebar .sidebar-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+  }
+  
+  .sidebar .sidebar-header .close-btn {
+    position: absolute;
+    top: 0;
+    height: 60px;
+    width: 100%;
+    background: black;
+    color: #fff;
+    font-size: 20px;
+    border: none
+  }
+  
+  
+  .sidebar .links{
+    padding: 0 20px;
+  }
+  
+  .sidebar .links li{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar .links li a{
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .sidebar .links li a svg{
+    margin-right: 10px;
+  }
+  
+  .sidebar-toggle{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  .show-sidebar{
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+  }
+
+  nav .navbar-brand {    
+    visibility: hidden;
+  }
+
+  nav .sidebar-toggle {
+    visibility: visible;
+  }
+
+  nav .sidebar-header .close-btn {
+    visibility: visible;
+  }
+
+
+}

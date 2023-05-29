@@ -13,7 +13,7 @@ const Course = ({courses}) => {
             location.pathname === "/"  ?
             <header>
                 <h2> Latest Bestlearn Courses </h2>
-                <Link to="/archive"> All Courses </Link>
+                <Link to="/archive"> <h2 style={{color: "limegreen"}}> All Courses </h2> </Link>
             </header> : null
         }
       <div className="row">

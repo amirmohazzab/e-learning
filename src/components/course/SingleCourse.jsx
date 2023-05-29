@@ -39,14 +39,14 @@ const SingleCourse = () => {
         <aside class="col-md-4 col-sm-12 col-xs-12 pull-left">
 
             <article class="teacher-info">
-                <img src="../images/pic/avatar.jpg"/>
+                <img src="../images/avatar.jpg"/>
                 <h2> teacher: john black</h2>
             </article>
 
             <article class="term-info">
                 <h2> Course info </h2>
                 <ul>
-                    <li> level: Advanced </li>
+                    <li> category: {course.category}  </li>
                     <li> price: {course.price} </li>
                 </ul>
             </article>

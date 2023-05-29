@@ -21,6 +21,29 @@ const AdminContext = ({ courses, children }) => {
 
     useEffect(() => setCourseList(courses), [courses]);
 
+    const categories =  [
+        {
+          "id": "1",
+          "name": "Mobile"
+        },
+        {
+          "id": "2",
+          "name": "Web"
+        },
+        {
+          "id": "3",
+          "name": "Desktop"
+        },
+        {
+          "id": "4",
+          "name": "Design"
+        },
+        {
+          "id": "5",
+          "name": "Database"
+        }
+      ];
+
     const validator = useRef(
         new SimpleReactValidator({
             element: message => <div style={{ color: "red" }}>{message}</div>
@@ -90,6 +113,7 @@ const AdminContext = ({ courses, children }) => {
                 sortCoursesAsc,
                 sortCoursesDes,
                 validator,
+                categories
             }}
         >
             <NewCourseDialog

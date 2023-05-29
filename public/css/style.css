@@ -253,7 +253,7 @@ footer .top-footer{
   font-size: 6px;
   font-family: 'FontAwesome';
   content: '\f111';
-  left: 0;
+  left: -15px;
   top: 3px
 }
 .bottom-footer{
@@ -1106,6 +1106,11 @@ main#home-page{
   .landing-layer nav ul li a{
     padding-right: 0
   }
+
+  .side-nav {
+    display: none;
+  }
+  
 }
 
 @media screen and (max-width : 767px){

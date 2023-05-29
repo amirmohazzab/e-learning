@@ -8,6 +8,7 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
     const [title, setTitle] = useState();
     const [price, setPrice] = useState();
     const [imageUrl, setImageUrl] = useState();
+    const [category, setCategory] = useState();
     const [info, setInfo] = useState();
     const [ ,forceUpdate] = useState();
 
@@ -15,7 +16,7 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
     const dispatch = useDispatch();
 
     const context = useContext(dashContext);
-    const {validator} = context; 
+    const {validator, categories} = context; 
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,9 +27,16 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                 data.append("title", title);
                 data.append("price", Number.parseInt(price));
                 data.append("imageUrl", event.target.imageUrl.files[0]);
+                data.append("category", category);
                 data.append("info", info);
 
                 dispatch(createNewCourse(data));
+
+                setTitle();
+                setPrice();
+                setImageUrl();
+                setCategory();
+                setInfo();
                 closeDialog();
                
             } else {
@@ -102,6 +110,25 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                         {validator.current.message("imageUrl", imageUrl, "required")}
 
 
+                        <div className="mb-2">
+                          <select value={category} className="form-control mb-2" 
+                                  onChange={(e) => {
+                                        setCategory(e.target.value);
+                                        validator.current.showMessageFor("category")
+                                    }}
+                          >
+                            <option value=""> Select Category </option>
+                            {categories.map(category => (
+                                <option key={category.id} value={category.name}>
+                                  {category.name}
+                                </option>
+                              ))
+                            }
+                          </select>
+                          {validator.current.message("category", category, "required")} 
+                        </div>
+
+                        
                         <textarea
                             name="info"
                             placeholder="info"

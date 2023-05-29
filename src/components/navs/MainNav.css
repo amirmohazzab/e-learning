@@ -1,0 +1,31 @@
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+    background-color: green;
+  }
+  
+  .navbar-bg-green li a {
+    color: #fff;
+    background-color: green;
+  }
+  
+  .navbar-bg-green > a:hover {
+    color: #fff;
+    background-color: green;
+  }
+  
+  .dropdown-menu {
+    padding: 0 !important;
+  }
+  
+  
+  @media screen and (max-width : 768px){
+  
+    .navbar-bg-green li a {
+      color: #fff !important; 
+      background-color: green;
+    }
+  
+  
+  
+  }
