@@ -120,7 +120,7 @@ const Archive = () => {
         </header>
 
         <div className="row">
-          <div className="col-md-4 col-sm-12 col-xs-12 pull-right">
+          <div className="col-xs-12 col-sm-12 col-md-4 pull-right">
             <form action="" method="">
               <div className="input">
                 <input
@@ -138,7 +138,7 @@ const Archive = () => {
               </div>
             </form>
           </div>
-          <div className="col-md-4 col-sm-6 col-xs-12">
+          <div className="col-xs-12 col-sm-6 col-md-4">
             <div className="switch-field available">
               <input
                 id="available-filter-1"
@@ -168,7 +168,7 @@ const Archive = () => {
               <label for="available-filter-3"> All </label>
             </div>
           </div>
-          <div className="col-md-4 col-sm-6 col-xs-12 pull-left">
+          <div className="col-xs-12 col-sm-6 col-md-4 pull-left">
             <div className="select-ddl">
               <select value={sort} onChange={sortedPrice}>
                 <option value=""> price </option>
@@ -181,7 +181,7 @@ const Archive = () => {
       </div>
 
       <div className="row">
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+        <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <section class="aside-section filter-by-category">
             <header>
               <h3> Categories </h3>
@@ -254,7 +254,7 @@ const Archive = () => {
             </div>
           </section>
         </div>
-        <div className="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+        <div className="col-xs-9 col-sm-9 col-md-10 col-lg-10">
           <section className="terms-items pl-6">
             <div className="row">
               <Course courses={archiveCourses} />

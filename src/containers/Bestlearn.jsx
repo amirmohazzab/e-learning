@@ -19,14 +19,16 @@ import PrivateLayout from "./../components/layouts/PrivateLayout";
 import Dashboard from './../components/admin/Dashboard';
 import CourseTable from './../components/admin/CourseTable';
 import AdminContext from "../components/context/AdminContext";
+import {getBasket} from '../actions/cart';
 
 const Bestlearn = () => {
   const courses = useSelector((state) => state.courses);
   const user = useSelector((state) => state.user);
+  
   const dispatch = useDispatch();
 
   const indexCourses = paginate(courses, 1, 8);
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -36,9 +38,11 @@ const Bestlearn = () => {
       if (isMyTokenExpired) {
         localStorage.removeItem("token");
         dispatch(clearUser());
-      } else dispatch(addUser(myDecodedToken.user));
-    }
-  }, []);
+      } else {
+            dispatch(addUser(myDecodedToken.user));
+            dispatch(getBasket())};
+        }
+  }, [ dispatch]);
 
   return (
     <Routes>

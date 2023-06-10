@@ -8,6 +8,7 @@ import { addUser } from "./../../actions/user";
 import { decodeToken } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
 import { showLoading, hideLoading} from 'react-redux-loading-bar'
+import { getBasket } from './../../actions/cart';
 
 const UserContext = ({ children }) => {
     const [fullname, setFullname] = useState("");
@@ -15,6 +16,7 @@ const UserContext = ({ children }) => {
     const [password, setPassword] = useState("");
 
     const [, forceUpdate] = useState();
+
 
     useEffect(() => {
         return () => {
@@ -48,8 +50,10 @@ const UserContext = ({ children }) => {
                     localStorage.setItem("token", data.token);
                     const myDecodedToken = decodeToken(data.token);
                     dispatch(addUser(myDecodedToken.user));
+                    // dispatch(getBasket());
                     dispatch(hideLoading());
                     navigate("/", {replace: true});
+                   
                 }
             } else {
                 validator.current.showMessages();

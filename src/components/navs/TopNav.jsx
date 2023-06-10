@@ -1,11 +1,17 @@
 import React from "react";
 import {isEmpty} from 'lodash';
-import { NavLink, useLocation} from "react-router-dom";
+import { NavLink, useLocation, Link} from "react-router-dom";
+import {FaShoppingBasket} from "react-icons/fa";
 import { useSelector } from 'react-redux';
+// import {getBasket} from '../../actions/cart';
 
 const TopNav = () => {
 
   const user = useSelector(state => state.user);
+  const cart = useSelector(state => state.cart);
+
+  // const dispatch = useDispatch();
+
   const location = useLocation();
 
 
@@ -24,19 +30,34 @@ const TopNav = () => {
         <div className="col-sm-6 col-xs-12">
           <div className="clientarea">
             {
-              !isEmpty(user) ? (
+               !isEmpty(user) ? (
 
-                <div className="loggein">
-                  <i className="zmdi zmdi-account"></i>
-                  <NavLink to="/user-profile" style={({isActive}) => ({ color: isActive ? "lime" : null})}> {user.fullname} </NavLink>
+                <div className="loggein">  
+
+                  { !user.isAdmin &&
+                  
+                      <Link to="/cart">
+                          <div className="right-nav">
+                            <FaShoppingBasket style={{width: 20, height: 13}}/>
+                            <span className="notif">{cart.totalQTY}</span>
+                          </div>
+                      </Link>
+                  }
+
+                   {"  "}
+          
                   {"  "}
-                  /
+                  <NavLink to="/user-profile" style={({isActive}) => ({ color: isActive ? "lime" : null})}> {user?.fullname} </NavLink>
                   {"  "}
-                  {user.isAdmin ? (<NavLink to="/dashboard"> Admin Panel </NavLink>) : null}
+          
+                  {"  "}
+                 
+                  {user.isAdmin && <NavLink to="/dashboard"> / Admin Panel </NavLink>  }
                     {"  "}
-                    /
+                    
                     {"  "}
-                  <NavLink to="/logout"> logout </NavLink>
+                    
+                  <NavLink to="/logout"> / logout </NavLink>
                 </div>
               ) : (
                 <div className="signin">

@@ -1,12 +1,29 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import config from '../../services/config.json';
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux';
+import { isEmpty } from "lodash";
+import ButtonBasket from './ButtonBasket';
+import {addToBasket} from '../../actions/cart';
 
 
 const Course = ({courses}) => {
 
+    const user = useSelector(state => state.user);
+    const cart = useSelector(state => state.cart);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const location = useLocation();
-    
+
+    const handleSubmit = (item) => {
+        if (!isEmpty(user)) {
+            dispatch(addToBasket(item._id));
+        }else{
+            navigate("/login", {replace: true});
+        }
+    };
+	
+
   return (
     <section className="terms-items">
         {
@@ -16,32 +33,16 @@ const Course = ({courses}) => {
                 <Link to="/archive"> <h2 style={{color: "limegreen"}}> All Courses </h2> </Link>
             </header> : null
         }
-      <div className="row">
-      {courses.map(course => (
-                    <div
-                        key={course._id}
-                        className="col-lg-3 col-md-4 col-sm-6 col-xs-12 term-col"
-                    >
-                        <article>
-                            <Link
-                                to={`/course/${course._id}`}
-                                className="img-layer"
-                            >
-                                <img
-                                    src={`${config.localapi}/${course.imageUrl}`}
-                                />
-                            </Link>
-                            <h2>
-                                <Link to={`/course/${course._id}`}>
-                                    {course.title}
-                                </Link>
-                            </h2>
-                            <span>
-                                 {course.price}
-                            </span>
-                        </article>
-                    </div>
-                ))}
+        <div className="row">
+        {courses.map(c => 
+                <ButtonBasket 
+                    user={user}
+                    key={c._id}
+                    handleSubmit={() => handleSubmit(c)}
+                    isClicked={ !isEmpty(user) && !user.isAmin && cart?.cartItems && cart?.cartItems.some(cp => cp.productId._id === c._id)} 
+                    course={c} 
+                /> 
+        )}
       </div>
     </section>
   );

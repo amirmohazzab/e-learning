@@ -4,7 +4,7 @@ const MainNav = () => {
   return (
     <nav
       className="navbar navbar-default"
-      style={{ background: "green", marginBottom: 0, borderWidth: 0}}
+      style={{ background: "green", marginBottom: 0, borderWidth: 0, borderRadius: 0}}
     >
       <div className="container-fluid">
         <div className="navbar-header">
