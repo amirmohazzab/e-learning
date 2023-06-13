@@ -3,21 +3,19 @@ import {Link, Navigate} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import config from '../../services/config.json';
 import { isEmpty } from "lodash";  
-import {addToBasket, deleteFromBasket, deleteFromBasketMulti, clearBasket, getBasket} from '../../actions/cart';
+import {BsTrash} from "react-icons/bs";
+// import {addToBasket, deleteFromBasket, deleteFromBasketMulti, clearBasket, getBasket} from '../../actions/cart';
+import { addToBasket, deleteFromBasket, deleteFromBasketMulti, clearBasket, getBasket } from "../../features/cartSlice";
 
 const UserProfile = () => {
 
-  const user = useSelector(state => state.user);
+  const {user} = useSelector(state => state.user);
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   
 
-  useEffect(() => {
-    dispatch(getBasket());
-}, [cart, dispatch]);
-
   const addition = (acc, currentvalue) => {
-    return acc + currentvalue.productId.price * currentvalue.cartQuantity;
+    return acc + currentvalue.productId?.price * currentvalue.cartQuantity;
   }
 
   const total = cart.cartItems.reduce(addition, 0);
@@ -27,18 +25,18 @@ const UserProfile = () => {
 
   return (
     <> 
-    <div class="user-account">
-      <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-12">
+    <div className="user-account">
+      <div className="row">
+        <div className="col-md-3 col-sm-4 col-xs-12">
           <aside>
-            <div class="avatar-layer">
-              <div class="img-layer">
-                <a href="" class="change-image">
-                  <i class="zmdi zmdi-edit"></i>
+            <div className="avatar-layer">
+              <div className="img-layer">
+                <a href="" className="change-image">
+                  <i className="zmdi zmdi-edit"></i>
                 </a>
                 <img src="images/avatar.jpg" />
               </div>
-              <div class="detail">
+              <div className="detail">
                 <span> {user.fullname} </span>
               </div>
             </div>
@@ -47,7 +45,7 @@ const UserProfile = () => {
               <header>
                 <h3> Dashboard </h3>
               </header>
-              <div class="inner">
+              <div className="inner">
                 <ul>
                   <li>
                     <Link to="/logout"> Logout </Link>
@@ -57,116 +55,125 @@ const UserProfile = () => {
             </section>
           </aside>
         </div>
-        <div class="col-md-9 col-sm-8 col-xs-12">
-          <section class="user-account-content">
+        <div className="col-md-9 col-sm-8 col-xs-12">
+          <section className="user-account-content">
             <header>
               <h1> Dashboard </h1>
             </header>
-            <div class="inner">
-              <div class="account-information">
+            <div className="inner">
+              <div className="account-information">
                 <h3> Information </h3>
                 <ul>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-account"></i> Fullname: {user.fullname}
+                    <i className="zmdi zmdi-account"></i> Fullname: {user.fullname}
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-assignment-account"></i> User name: {user.email.split('@')[0]}
+                    <i className="zmdi zmdi-assignment-account"></i> User name: {user.email.split('@')[0]}
                   </li>
                   <li>
                     {" "}
-                    <i class="zmdi zmdi-email"></i> Email: {user.email}
+                    <i className="zmdi zmdi-email"></i> Email: {user.email}
                   </li>
                 </ul>
               </div>
             </div>
           </section>
+
+          {
+          !user.isAdmin &&
           <section className="cart">
-            {cart?.cartItems.map(product => {
-              return(
-                    <div
-                        key={product.productId._id}
-                        className="col-lg-3 col-md-4 col-sm-6 col-xs-12 term-col cart-item"
-                    >
-                        <article >
-                            <div style={{display: "flex", alignItems: "center", justifyContent: "space-around"}}> 
+          <div className="table-responsive">
+                                            <table className="table align-middle">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Product  </th>
+                                                        <th> Name </th>
+                                                        <th> Price </th>
+                                                        <th> Number </th>
+                                                        <th> Sum </th>
+														                            <th> Action </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+											                           	{cart?.cartItems.map(product => (
+                                                        <tr key={product.productId._id} >
+                                                          
+                                                            <td >
+                                                                <Link
+                                                                  to={`/course/${product.productId._id}`}
+                                                                  className="img-layer"
+                                                                >
+                                                                  <img
+                                                                    src={`${config.localapi}/${product.productId.imageUrl}`}
+                                                                    style={{width: "220px", height: "150px"}}
+                                                                  />
+                                                                </Link>
+                                                            </td>
+                                                            <td className="fw-bold" style={{verticalAlign: "middle"}}>
+                                                                <Link to={`/course/${product.productId._id}`}>
+                                                                  {product.productId.title}
+                                                                </Link>
+															                              </td>
+															                              <td className="fw-bold" style={{verticalAlign: "middle"}}>{product.productId.price}</td>
+                                                            <td style={{verticalAlign: "middle"}}>
+                                                                <div>
+                                                                    <button onClick={() => dispatch(addToBasket(product.productId._id))} 
+                                                                            style={{border: "none", backgroundColor: "green", 
+                                                                            color: "white", borderRadius: "3px", width: "20px", fontSize: "15px"}}
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                    <div style={{width: "20px", textAlign: "center"}}> {product.cartQuantity} </div>
+                                                                    <button onClick={() => {
+                                                                      if(product.cartQuantity > 1) {
+                                                                      dispatch(deleteFromBasket(product.productId._id))
+                                                                      }else{
+                                                                      dispatch(deleteFromBasketMulti(product.productId._id))
+                                                                      }}} 
+                                                                      style={{border: "none", backgroundColor: "green", 
+                                                                               color: "white", borderRadius: "3px", width: "20px", fontSize: "15px"}}
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                              <td className="fw-bold" style={{verticalAlign: "middle"}}>{product.productId.price * product.cartQuantity} </td>
+                                                              <td style={{verticalAlign: "middle"}}>
+                                                                <button 
+                                                                  onClick={()=> dispatch(deleteFromBasketMulti(product.productId._id))}   
+                                                                        style={{color: "white", backgroundColor: "green", border: "none", 
+                                                                        fontSize: "25px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "3px"}}
+                                                                  > 
+                                                                  <BsTrash/>
+                                                                </button>  
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+										</div> 
 
-                                <div > 
-                                  <Link
-                                      to={`/course/${product.productId._id}`}
-                                      className="img-layer"
-                                  >
-                                      <img
-                                          src={`${config.localapi}/${product.productId.imageUrl}`}
-                                          style={{width: "220px", height: "150px"}}
-                                      />
-                                  </Link>
-                                </div>
-                               
-                                <div style={{textAlign: "center", marginLeft: "20px"}}> 
-                                    <h2 style={{paddingBottom: "5px"}}>
-                                      <Link to={`/course/${product.productId._id}`}>
-                                          {product.productId.title}
-                                      </Link>
-                                    </h2>
-                                    {" "}
-                                    <h5> {product.productId.price} </h5>
-                                </div>
-                                     
-                                <div style={{marginRight: "200px", marginLeft: "170px", textAlign: "center"}}> 
-                                   <div style={{paddingRight: "10px"}}>  
-                                    <h5 > sum : {product.productId.price * product.cartQuantity} </h5>
-                                    </div>
-                                    {" "}
-                                      <button onClick={() => dispatch(addToBasket(product.productId._id))}
-                                                style={{border: "none", backgroundColor: "green", color: "white"}}
-                                      > 
-                                          +
-                                      </button>
-                                      {" "}
-                                      <span> {product.cartQuantity} </span>
-                                      {" "}
-                                      <button onClick={() => {
-                                                          if(product.cartQuantity > 1){
-                                                            dispatch(deleteFromBasket(product.productId._id))
-                                                          }else{
-                                                            dispatch(deleteFromBasketMulti(product.productId._id))
-                                                          }
-                                                        }}
-                                                        style={{border: "none", backgroundColor: "green", color: "white"}}
-                                      > 
-                                        -
-                                      </button>
-                                </div>
-
-                                <div >   
-                                    <button 
-                                            onClick={()=> dispatch(deleteFromBasketMulti(product.productId._id))}   
-                                                      style={{color: "white", backgroundColor: "green", 
-                                                      display: "block", margin: 5}}
-                                            > 
-                                            delete 
-                                    </button>  
-                                </div>
-                              
-                            </div>
-                        </article>
+                    <div className="total" style={{marginTop: 10}}>
+                      {
+                        total > 0 
+                        ? 
+                        <> 
+                          <p> Sum : {total} </p> 
+                          <button onClick={() => dispatch(clearBasket())} style={{backgroundColor: "lime", borderColor: "lime"}}>
+                            Remove Basket
+                          </button>
+                        </>
+                        : 
+                        <p> Basket is Empty </p>
+                      }
                     </div>
-              )})
-      }
           </section>
+          }
+
         </div>
       </div>
-    </div>
-    <div className="total" style={{marginTop: 10}}>
-      {
-        total > 0 ? <p> Sum : {total} </p> : <p> Basket is Empty </p>
-        
-      }
-      <button onClick={() => dispatch(clearBasket())} style={{backgroundColor: "lime", borderColor: "lime"}}>
-        Remove Basket
-      </button>
     </div>
     </>
   );

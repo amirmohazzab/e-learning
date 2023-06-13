@@ -3,12 +3,13 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux';
 import { isEmpty } from "lodash";
 import ButtonBasket from './ButtonBasket';
-import {addToBasket} from '../../actions/cart';
+// import {addToBasket} from '../../actions/cart';
+import { addToBasket } from "../../features/cartSlice";
 
 
 const Course = ({courses}) => {
 
-    const user = useSelector(state => state.user);
+    const {user} = useSelector(state => state.user);
     const cart = useSelector(state => state.cart);
 
     const dispatch = useDispatch();
@@ -36,10 +37,9 @@ const Course = ({courses}) => {
         <div className="row">
         {courses.map(c => 
                 <ButtonBasket 
-                    user={user}
                     key={c._id}
                     handleSubmit={() => handleSubmit(c)}
-                    isClicked={ !isEmpty(user) && !user.isAmin && cart?.cartItems && cart?.cartItems.some(cp => cp.productId._id === c._id)} 
+                    isClicked={ !isEmpty(user) && !user.isAmin && cart?.cartItems && cart?.cartItems.some(cp => cp.productId?._id === c._id)} 
                     course={c} 
                 /> 
         )}

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { clearUser } from "../../actions/user";
+// import { clearUser } from "../../actions/user";
+import { clearUser } from "../../features/userSlice";
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {

@@ -3,11 +3,14 @@ import { BsCheckLg } from "react-icons/bs";
 import config from '../../services/config.json';
 import { Link } from "react-router-dom";
 import { isEmpty } from "lodash";
+import {useSelector} from 'react-redux';
 
-const ButtonBasket = ({ user, handleSubmit, isClicked, course }) => {
+const ButtonBasket = ({ handleSubmit, isClicked, course }) => {
 
-    course.quantity = 1;
-  
+    // course.quantity = 1;
+    const {user} = useSelector(state => state.user);
+  console.log(user);
+
   return (
     <div
     className="col-lg-3 col-md-4 col-sm-6 col-xs-12 term-col"
@@ -30,30 +33,34 @@ const ButtonBasket = ({ user, handleSubmit, isClicked, course }) => {
         </h2>
         <span>
             {course.price}
-                <button id={course._id}
-                    onClick={handleSubmit}
-                    className="pull-right"
+            {
+            !user?.isAdmin && 
+            <button id={course._id}
+                onClick={handleSubmit}
+                className="pull-right"
+                style={{
+                    border: "none",
+                    backgroundColor: "green",
+                    color: "white",
+                    width: 35,
+                    height: 25,
+                }}
+                >
+                {!isEmpty(user) && !user.isAdmin && isClicked ? (
+                    <BsCheckLg
                     style={{
-                        border: "none",
-                        backgroundColor: "green",
+                        cursor: "pointer",
                         color: "white",
-                        width: 35,
-                        height: 25,
+                        backgroundColor: "green",
                     }}
-                    >
-                    {!isEmpty(user) && !user.isAdmin && isClicked ? (
-                        <BsCheckLg
-                        style={{
-                            cursor: "pointer",
-                            color: "white",
-                            backgroundColor: "green",
-                        }}
-                        className="fa-lg"
-                        />
-                    ) : (
-                        <FaCartPlus style={{ cursor: "pointer" }} className="fa-lg" />
-                    )}
-                </button>
+                    className="fa-lg"
+                    />
+                ) : (
+                    <FaCartPlus style={{ cursor: "pointer" }} className="fa-lg" />
+                )}
+            </button>
+            }
+
         </span>
     </article>
 </div>

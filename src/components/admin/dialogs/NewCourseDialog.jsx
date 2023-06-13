@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
-import { createNewCourse } from "../../../actions/courses";
+// import { createNewCourse } from "../../../actions/courses";
+import { createNewCourse } from "../../../features/coursesSlice";
 import { dashContext } from './../../context/dashContext';
 
 const NewCourseDialog = ({ showDialog, closeDialog }) => {

@@ -10,7 +10,7 @@ import SingleCourse from "./../components/course/SingleCourse";
 import { useSelector, useDispatch } from "react-redux";
 import { paginate } from "./../utils/paginate";
 import { isExpired, decodeToken } from "react-jwt";
-import { addUser, clearUser } from "../actions/user";
+// import { addUser, clearUser } from "../actions/user";
 import Logout from "./../components/login/logout";
 import { isEmpty } from "lodash";
 import UserContext from "../components/context/userContext";
@@ -19,11 +19,13 @@ import PrivateLayout from "./../components/layouts/PrivateLayout";
 import Dashboard from './../components/admin/Dashboard';
 import CourseTable from './../components/admin/CourseTable';
 import AdminContext from "../components/context/AdminContext";
-import {getBasket} from '../actions/cart';
+// import {getBasket} from '../actions/cart';
+import { addUser, clearUser } from "../features/userSlice";
+import { getBasket } from "../features/cartSlice";
 
 const Bestlearn = () => {
-  const courses = useSelector((state) => state.courses);
-  const user = useSelector((state) => state.user);
+  const {courses} = useSelector((state) => state.courses);
+  const {user} = useSelector((state) => state.user);
   
   const dispatch = useDispatch();
 

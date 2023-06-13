@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { context } from "./context";
 import { successMessage, errorMessage } from "./../../utils/message";
 import { loginUser, registerUser } from "../../services/userService";
-import { addUser } from "./../../actions/user";
+// import { addUser } from "./../../actions/user";
 import { decodeToken } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
 import { showLoading, hideLoading} from 'react-redux-loading-bar'
-import { getBasket } from './../../actions/cart';
+// import { getBasket } from './../../actions/cart';
+import { addUser} from "../../features/userSlice";
+import { getBasket } from './../../features/cartSlice';
 
 const UserContext = ({ children }) => {
     const [fullname, setFullname] = useState("");
@@ -50,7 +52,7 @@ const UserContext = ({ children }) => {
                     localStorage.setItem("token", data.token);
                     const myDecodedToken = decodeToken(data.token);
                     dispatch(addUser(myDecodedToken.user));
-                    // dispatch(getBasket());
+                    dispatch(getBasket());
                     dispatch(hideLoading());
                     navigate("/", {replace: true});
                    

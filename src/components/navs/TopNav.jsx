@@ -4,10 +4,11 @@ import { NavLink, useLocation, Link} from "react-router-dom";
 import {FaShoppingBasket} from "react-icons/fa";
 import { useSelector } from 'react-redux';
 // import {getBasket} from '../../actions/cart';
+import { getBasket } from "../../features/cartSlice";
 
 const TopNav = () => {
 
-  const user = useSelector(state => state.user);
+  const {user} = useSelector(state => state.user);
   const cart = useSelector(state => state.cart);
 
   // const dispatch = useDispatch();

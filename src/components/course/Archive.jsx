@@ -14,7 +14,7 @@ const Archive = () => {
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("All");
 
-  const courses = useSelector((state) => state.courses);
+  const {courses} = useSelector((state) => state.courses);
   useEffect(() => setCourseList(courses), [courses]);
 
   console.log(courseList);

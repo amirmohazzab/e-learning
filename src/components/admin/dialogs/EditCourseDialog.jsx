@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { useDispatch } from "react-redux";
-import { handleCourseUpdate } from "../../../actions/courses";
+// import { handleCourseUpdate } from "../../../actions/courses";
+import { handleCourseUpdate } from "../../../features/coursesSlice";
 import { dashContext } from './../../context/dashContext';
+import { getAllCourses } from "../../../features/coursesSlice";
 
 const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
     const [courseId, setCourseId] = useState();
@@ -47,7 +49,12 @@ const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
         data.append("category", category);
         data.append("info", info);
 
-        dispatch(handleCourseUpdate(courseId, data));
+        dispatch(handleCourseUpdate({courseId, data}))
+        .then(() => {
+            dispatch(getAllCourses());
+          })
+          .catch((err) => console.log(err));
+            closeDialog();;
         closeDialog();
     };
 

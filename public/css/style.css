@@ -1013,7 +1013,7 @@ main#home-page{
 
 .cart{
   flex-wrap: wrap;
-  justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1054,6 +1054,60 @@ main#home-page{
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
+}
+
+
+.input-counter {
+  position: relative;
+  max-width: 20px;
+  min-width: 20px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.input-counter .plus-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  background-color: green;
+  cursor: pointer;
+  color: #fff;
+  height: 20px;
+  width: 100%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-counter .minus-btn {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  font-size: 18px;
+  background-color: green;
+  cursor: pointer;
+  color: #fff;
+  height: 20px;
+  width: 100%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.input-counter .input-number {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  font-size: 15px;
+  background-color: transparent;
+  cursor: pointer;
+  color: black;
+  height: 20px;
+  width: 100%;
 }
 
 
