@@ -1,6 +1,6 @@
 # Discription
 
-This project is a Medium shop with authentication and authorization, panel admin for adding, edditing, deleting, getting courses from MongoDB and some filters on courses. Also it is a shop for users to visit, search and buy courses. All chosen courses are shown in cart and user can increase, decrease the numbers and delete each course and delete all courses. Finally Typescript is added.
+This project is a Medium shop with authentication and authorization, panel admin for adding, edditing, deleting, getting courses from MongoDB and some filters on courses. Also it is a shop for users to visit, search and buy courses. All chosen courses are shown in cart (user-profile) and user can increase, decrease the numbers and delete each course and delete all courses. Finally Typescript is added. website and panel admin are together and one can access both of them based on authentication. Through login with admin user which username: "ah_mohazzab@yahoo.com" and password "123456" one can enter admin panel. Also one can after authentication, enter website without any restrictions.
 
 ## Technologies
 
