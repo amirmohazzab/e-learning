@@ -34,4 +34,4 @@ This project is a Medium shop with authentication and authorization, panel admin
 
 ## Show
 
-<a href="https://elearn.ahmohazzab.com"> Demo </a>
+<a href="https://elearn.ahmohazzab.com"> Show </a>
